@@ -6,7 +6,7 @@ import LeftNav from "../left-nav";
 import Header from "../header";
 import { Route, Switch } from "react-router-dom";
 import Home from "../../pages/home";
-import Product from "../../pages/product";
+import Product from "../../pages/product/index";
 import Category from "../../pages/category";
 import Pie from "../../pages/charts/pie";
 import Bar from "../../pages/charts/bar";

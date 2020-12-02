@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import React, { Component } from "react";
 import { Card, Table, Button, message, Modal } from "antd";
 import { PlusCircleOutlined, ArrowRightOutlined } from "@ant-design/icons";
@@ -53,11 +54,11 @@ export default class Category extends Component {
       },
     ];
   };
-  getCategories = async () => {
+  getCategories = async (parentId) => {
     this.setState({
       loading: true,
     });
-    const parentId = this.state.parentId;
+    parentId = parentId || this.state.parentId;
     const result = await reqCategorys(parentId);
     if (result.data.status === 0) {
       if (parentId === "0")
@@ -74,8 +75,8 @@ export default class Category extends Component {
     }
     this.setState({ loading: false });
   };
-  getSubCategories = (category) => {
-    this.setState({ parentId: category._id, parentName: category.name }, () => {
+  getSubCategories = ({ _id, name }) => {
+    this.setState({ parentId: _id, parentName: name }, () => {
       this.getCategories();
     });
   };
@@ -93,25 +94,46 @@ export default class Category extends Component {
       modalStatus: 1,
     });
   };
-  handleModalAdd = () => {};
+  handleModalAdd = async () => {
+    const result = await this.refAdd.current.validateFields();
+
+    //prepare data
+    const { parentId, categoryName, errorFields } = result;
+    if (!errorFields) {
+      //add new data
+      const data = await reqAddCategory({ parentId, categoryName });
+      if (data.data.status === 0) {
+        if (parentId === this.state.parentId) this.getCategories();
+        else if (parentId === "0") this.getCategories("0");
+      }
+      //close the dialog box
+      this.setState({
+        modalStatus: 0,
+      });
+    }
+  };
   showModalUpdate = (category) => {
     this.category = category;
 
     this.setState({ modalStatus: 2 });
   };
+
   handleModalUpdate = async () => {
-    //close the dialog
-    this.setState({
-      modalStatus: 0,
-    });
-    //prepare data
-    const categoryId = this.category._id;
-    const categoryName = this.refInput.current.getFieldValue("categoryName");
-    //update data
-    const result = await reqUpdateCategory({ categoryId, categoryName });
-    //if successful, update rendering
-    if (result.data.status === 0) {
-      this.getCategories();
+    const result = await this.UpdateRef.current.validateFields();
+    const { errorFields, categoryName } = result;
+    if (!errorFields) {
+      //close the dialog
+      this.setState({
+        modalStatus: 0,
+      });
+      //prepare data
+      const categoryId = this.category._id;
+      //update data
+      const result = await reqUpdateCategory({ categoryId, categoryName });
+      //if successful, update rendering
+      if (result.data.status === 0) {
+        this.getCategories();
+      }
     }
   };
   handleCancel = () => {
@@ -171,10 +193,16 @@ export default class Category extends Component {
         <Modal
           title="Add Category"
           visible={modalStatus === 1}
-          onOk={this.handleOk}
+          onOk={this.handleModalAdd}
           onCancel={this.handleCancel}
         >
-          <AddCategory subCategories={subCategories} />
+          <AddCategory
+            categories={categories}
+            parentId={parentId}
+            propsfunc={(refAdd) => {
+              this.refAdd = refAdd;
+            }}
+          />
         </Modal>
         <Modal
           title="Update Category"
@@ -184,8 +212,8 @@ export default class Category extends Component {
         >
           <UpdateCategory
             categoryName={category.name}
-            propsfunc={(refInput) => {
-              this.refInput = refInput;
+            propsfunc={(UpdateRef) => {
+              this.UpdateRef = UpdateRef;
             }}
           />
         </Modal>
