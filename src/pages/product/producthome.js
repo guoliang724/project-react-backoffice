@@ -61,7 +61,13 @@ export default class ProductHome extends Component {
             >
               Details
             </LinkButton>
-            <LinkButton>Modify</LinkButton>
+            <LinkButton
+              onClick={() => {
+                this.props.history.push("/product/addupdate", product);
+              }}
+            >
+              Modify
+            </LinkButton>
           </span>
         ),
       },
@@ -103,9 +109,8 @@ export default class ProductHome extends Component {
   };
   updateStatus = async (productId, status) => {
     const result = await reqUpdateStatus(productId, status);
-    console.log("result", result);
+
     if (result.data.status === 0) {
-      console.log("点击了");
       message.success("Update product status Successfully");
       this.GetProducts(this.pageNumber);
     }

@@ -32,6 +32,7 @@ export function reqTime(time) {
     date.getMonth() + 1
   }/${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
 }
+/******************Category***************/
 /*request categories information */
 export function reqCategorys(parentId) {
   return ajax(base + "/manage/category/list", { parentId });
@@ -56,12 +57,11 @@ export function reqUpdateCategory({ categoryId, categoryName }) {
     "POST"
   );
 }
-
+/*************Product*********************** */
 //request to prodcut inforamtion
 export function reqProducts(pageNum, pageSize) {
   return ajax(base + "/manage/product/list", { pageNum, pageSize });
 }
-
 //request to product information by pageNumber, pageSize, productName or producDesc
 export function reqSearchProducts(
   pageNum,
@@ -83,4 +83,37 @@ export function reqUpdateStatus(productId, status) {
     { productId, status },
     "POST"
   );
+}
+//add or update a product
+export function reqAddOrUpdateProduct(product) {
+  if (product._id) {
+    return ajax(base + "/manage/product/update", product, "POST");
+  } else {
+    return ajax(base + "/manage/product/add", product, "POST");
+  }
+}
+//delete pictures
+export function reqDeletePictures(name) {
+  return ajax(base + "/manage/img/delete", { name }, "POST");
+}
+/***********Roles***************** */
+//request all roles
+export const reqRoles = () => {
+  return ajax(base + "/manage/role/list");
+};
+
+//add a role
+export function reqAddRole(roleName) {
+  return ajax(base + "/manage/role/add", { roleName }, "POST");
+}
+
+//update a role
+export function reqUpdateRole(role) {
+  return ajax(base + "manage/role/update", role, "POST");
+}
+
+/************Users******************/
+//request to user lists
+export function reqUsers() {
+  return ajax(base + "/manage/user/list");
 }

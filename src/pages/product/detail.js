@@ -38,7 +38,12 @@ export default class ProductDetail extends Component {
             <span className="left">Product Images:</span>
             <span>
               {imgs.map((img) => (
-                <img src={img} key={img} alt="img" className="product-img" />
+                <img
+                  src={"/upload/" + img}
+                  key={img}
+                  alt="img"
+                  className="product-img"
+                />
               ))}
             </span>
           </Item>

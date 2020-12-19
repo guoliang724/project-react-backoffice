@@ -26,6 +26,7 @@ class LeftNav extends Component {
   };
   render() {
     let nav = this.props.location.pathname;
+
     if (nav.indexOf("/product") === 0) {
       nav = "/product";
     }
