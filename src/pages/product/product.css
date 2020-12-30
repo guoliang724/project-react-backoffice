@@ -1,0 +1,9 @@
+li.ant-list-item {
+  justify-content: left;
+}
+
+.product-detail .left {
+  font-size: 17px;
+  margin-right: 10px;
+  font-weight: bolder;
+}

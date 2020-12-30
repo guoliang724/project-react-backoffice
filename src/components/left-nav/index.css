@@ -1,0 +1,19 @@
+.left-nav {
+  color: white;
+}
+.left-nav-header {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  background-color: rgba(102, 98, 98, 0.5);
+}
+.left-nav-header img {
+  width: 40px;
+  height: 40px;
+  margin: 0 15px 0 20px;
+}
+.left-nav-header h1 {
+  color: white;
+  font-size: 16px;
+  margin-bottom: 0;
+}
