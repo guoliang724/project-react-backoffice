@@ -17,6 +17,7 @@ export const manueList = [
     icon: <HomeOutlined />,
     path: "/home",
     content: "Home",
+    isPublic: true,
   },
   {
     key: "sub1",

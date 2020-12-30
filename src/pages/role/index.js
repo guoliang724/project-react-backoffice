@@ -4,6 +4,7 @@ import { reqRoles, reqAddRole, reqUpdateRole } from "../../api/index";
 import AddForm from "./addform";
 import UpdateForm from "./updateform";
 import memory from "../../utils/memory";
+import storage from "../../utils/storage";
 import getDate from "../../utils/formateDate";
 export default class Role extends Component {
   constructor() {
@@ -67,8 +68,16 @@ export default class Role extends Component {
     const result = await reqUpdateRole(role);
 
     if (result.data.status === 0) {
-      message.success("success!");
-      this.getRoles();
+      //if update the current user role,then exit to relogin
+      if (role._id === memory.user.role_id) {
+        memory.user = {};
+        storage.RemoveUser();
+        this.props.history.replace("/login");
+        message.success("Success! Need to Relogin");
+      } else {
+        message.success("success!");
+        this.getRoles();
+      }
     } else {
       message.error("Failed");
     }
@@ -142,6 +151,9 @@ export default class Role extends Component {
             rowSelection={{
               type: "radio",
               selectedRowKeys: [role._id],
+              onSelect: (role) => {
+                this.setState({ role });
+              },
             }}
             onRow={this.onRow}
           />

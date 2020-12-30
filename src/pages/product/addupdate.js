@@ -36,6 +36,7 @@ export default class ProductAddUpdate extends Component {
       result.pCategoryId = result.category[0];
       result.categoryId = result.category[1];
     }
+    //getting values wrong
     if (result.errorFields) {
       message.warn("Input is not correct!");
     } else {

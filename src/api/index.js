@@ -8,10 +8,7 @@ const base = "";
 export function reqLogin(username, password) {
   return ajax(base + "/login", { username, password }, "POST");
 }
-/*request to add an user */
-export function reqAdduser(user) {
-  return ajax(base + "/manage/user/add", user, "POST");
-}
+
 /*fetch weather information */
 export function reqWeather(city) {
   const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=31b67d550e93316925f5913b31894f17`;
@@ -116,4 +113,18 @@ export function reqUpdateRole(role) {
 //request to user lists
 export function reqUsers() {
   return ajax(base + "/manage/user/list");
+}
+//request to delete user
+export function reqDeleteUsers(userId) {
+  return ajax(base + "/manage/user/delete", { userId }, "POST");
+}
+
+/*request to add an user */
+export function reqAdduser(user) {
+  return ajax(base + "/manage/user/add", user, "POST");
+}
+
+//request to update an user
+export function reqUpdateUser(user) {
+  return ajax(base + "/manage/user/update", user, "POST");
 }

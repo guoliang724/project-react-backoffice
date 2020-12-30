@@ -175,6 +175,7 @@ export default class ProductHome extends Component {
       <Card title={title} extra={extra}>
         <Table
           pagination={{
+            current: this.pageNumber,
             defaultPageSize: defaultPageSize,
             total,
             showQuickJumper: true,
