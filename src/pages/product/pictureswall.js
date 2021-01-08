@@ -80,7 +80,6 @@ export default class PicturesWall extends React.Component {
   };
 
   render() {
-    const { imgs } = this.props;
     const { previewVisible, previewImage, fileList, previewTitle } = this.state;
     const uploadButton = (
       <div>
