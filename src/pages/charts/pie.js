@@ -1,57 +1,76 @@
 import React, { Component } from "react";
-import { Card, Button, message } from "antd";
+import { Card } from "antd";
 import * as echarts from "echarts";
 
 export default class Pie extends Component {
   refPie = React.createRef();
   pieChart = null; //instance of echarts
-  state = {
-    sales: [5, 20, 36, 10, 10, 20],
-    inventories: [7, 10, 26, 50, 20, 18],
-  };
-  //update bar chart
-  update = () => {
-    this.setState({
-      sales: this.state.sales.map((item) => item + 1),
-      inventories: this.state.inventories.map((item) => item - 1),
-    });
-    this.dataChange();
-  };
+
   //initial bar chart
   initChart = () => {
-    //decide if it has an Dom Instance
-    if (this.pieChart) {
-      this.pieChart.dispose();
-    }
     let option = {
+      backgroundColor: "#2c343c",
+
       title: {
-        text: "ECharts Demo",
+        text: "Visit Sources",
+        left: "center",
+        top: 20,
+        textStyle: {
+          color: "#ccc",
+        },
       },
-      tooltip: {},
-      legend: {
-        data: ["Sales", "Inventory"],
+
+      tooltip: {
+        trigger: "item",
+        formatter: "{a} <br/>{b} : {c} ({d}%)",
       },
-      xAxis: {
-        data: [
-          "Computers",
-          "Cell Phones",
-          "Car&Vehicle",
-          "Televisions",
-          "Office Electrics",
-          "Portable Audio",
-        ],
+
+      visualMap: {
+        show: false,
+        min: 80,
+        max: 600,
+        inRange: {
+          colorLightness: [0, 1],
+        },
       },
-      yAxis: {},
       series: [
         {
-          name: "Sales",
-          type: "bar",
-          data: this.state.sales,
-        },
-        {
-          name: "Inventory",
-          type: "bar",
-          data: this.state.inventories,
+          name: "visit sources",
+          type: "pie",
+          radius: "55%",
+          center: ["50%", "50%"],
+          data: [
+            { value: 335, name: "Directly" },
+            { value: 310, name: "Email Promotion" },
+            { value: 274, name: "Advertisment" },
+            { value: 235, name: "Video Advertisment" },
+            { value: 400, name: "Search Engine" },
+          ].sort(function (a, b) {
+            return a.value - b.value;
+          }),
+          roseType: "radius",
+          label: {
+            color: "rgba(255, 255, 255, 0.3)",
+          },
+          labelLine: {
+            lineStyle: {
+              color: "rgba(255, 255, 255, 0.3)",
+            },
+            smooth: 0.2,
+            length: 10,
+            length2: 20,
+          },
+          itemStyle: {
+            color: "#c23531",
+            shadowBlur: 200,
+            shadowColor: "rgba(0, 0, 0, 0.5)",
+          },
+
+          animationType: "scale",
+          animationEasing: "elasticOut",
+          animationDelay: function (idx) {
+            return Math.random() * 200;
+          },
         },
       ],
     };
@@ -59,27 +78,7 @@ export default class Pie extends Component {
     this.pieChart = echarts.init(this.refPie.current);
     this.pieChart.setOption(option, true);
   };
-  //change data in chart
-  dataChange = () => {
-    if (this.pieChart) {
-      this.pieChart.setOption({
-        series: [
-          {
-            name: "Sales",
-            type: "bar",
-            data: this.state.sales,
-          },
-          {
-            name: "Inventory",
-            type: "bar",
-            data: this.state.inventories,
-          },
-        ],
-      });
-    } else {
-      message.warn("Chart Dose not exist!");
-    }
-  };
+
   //initial in the beganing
   componentDidMount = () => {
     this.initChart();
@@ -88,12 +87,7 @@ export default class Pie extends Component {
   render() {
     return (
       <div>
-        <Card>
-          <Button type="primary" onClick={this.update}>
-            Reset
-          </Button>
-        </Card>
-        <Card title="Bar Chart One">
+        <Card title="Pie Chart Display">
           <div
             id="piechart"
             ref={this.refPie}

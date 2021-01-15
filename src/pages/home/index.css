@@ -1,0 +1,10 @@
+.home-container {
+  display: flex;
+  flex-direction: row;
+}
+.home-container .card1 {
+  width: 50%;
+}
+.home-container .card2 {
+  padding: 5%;
+}

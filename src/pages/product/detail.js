@@ -39,6 +39,7 @@ export default class ProductDetail extends Component {
             <span>
               {imgs.map((img) => (
                 <img
+                  style={{ width: 200, height: 200 }}
                   src={"/upload/" + img}
                   key={img}
                   alt="img"
