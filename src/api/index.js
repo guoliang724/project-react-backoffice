@@ -2,8 +2,8 @@ import ajax from "./ajax";
 import jsonp from "jsonp";
 import { message } from "antd";
 
-const base = "/api";
-
+const base = "";
+export var universalUrl = base;
 /* get the login information */
 export function reqLogin(username, password) {
   return ajax(base + "/login", { username, password }, "POST");

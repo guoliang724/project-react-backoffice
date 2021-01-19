@@ -25,7 +25,7 @@ export default class Admin extends Component {
       return (
         <Layout
           style={{
-            height: "100%",
+            minHeight: "100%",
           }}
         >
           <Sider>

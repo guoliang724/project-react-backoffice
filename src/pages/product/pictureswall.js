@@ -2,8 +2,9 @@ import { Upload, Modal, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { reqDeletePictures } from "../../api/index";
 import React from "react";
+import { universalUrl } from "../../api/index";
 
-const baseUrl = "/manage/img/upload";
+const actionUrl = universalUrl + "/manage/img/upload";
 function getBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -29,7 +30,7 @@ export default class PicturesWall extends React.Component {
         uid: -index,
         name: img,
         status: "done",
-        url: "/upload/" + img,
+        url: `${universalUrl}/upload/` + img,
       }));
       this.setState({ fileList });
     }
@@ -90,7 +91,7 @@ export default class PicturesWall extends React.Component {
     return (
       <>
         <Upload
-          action={baseUrl} //the api address to upload pics
+          action={actionUrl} //the api address to upload pics
           accept="image/*" //the type
           name="image" //the name of request param
           listType="picture-card"

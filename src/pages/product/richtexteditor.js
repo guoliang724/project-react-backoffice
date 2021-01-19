@@ -13,13 +13,15 @@ export default class RichTextEditor extends Component {
     const html = this.props.detail;
     if (html) {
       const contentBlock = htmlToDraft(html);
-      const contentState = ContentState.createFromBlockArray(
-        contentBlock.contentBlocks
-      );
-      const editorState = EditorState.createWithContent(contentState);
-      this.setState({
-        editorState,
-      });
+      if (contentBlock) {
+        const contentState = ContentState.createFromBlockArray(
+          contentBlock.contentBlocks
+        );
+        const editorState = EditorState.createWithContent(contentState);
+        this.setState({
+          editorState,
+        });
+      }
     }
   };
   getDetail = () => {
