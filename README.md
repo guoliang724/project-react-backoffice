@@ -8,8 +8,11 @@
   3. Front-end: React + Antd + Axios +ES6 + webpack 
   4. Backend: Node.js + Express + Mongodb
   5. Design in modular,componentization,enginerring model.
+
+## Project Infrastructure
+![alt text](imgs/infrastructure.png)
   
-## Porject Packages:
+## Project Packages:
 | Realization   | Packages           |
 | :-------------: |:-------------:| 
 | Visualization/Interaction/Componentization | React/react-router-dom/antd| 
